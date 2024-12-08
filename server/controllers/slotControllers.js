@@ -134,4 +134,30 @@ exports.getMySlots = (req, res) => {  // Use getMyslots here, not getMySlots
     });
   };
 
-
+  exports.getBookedSlots = (req, res) => {
+    // SQL query to retrieve all booked slots with valid start and end times
+    const query = `
+      SELECT * FROM slots
+      WHERE status = 'booked'
+        AND start_time IS NOT NULL
+        AND end_time IS NOT NULL
+    `;
+  
+    db.query(query, (err, result) => {
+      if (err) {
+        // If there's an error with the query, send a 500 response with error details
+        return res.status(500).json({ message: 'Error retrieving booked slots', error: err });
+      }
+  
+      if (result.length === 0) {
+        // If no booked slots are found, return an appropriate message
+        return res.status(200).json({ message: 'No booked slots found' });
+      }
+  
+      // If there are booked slots, send them in the response
+      res.status(200).json({
+        message: 'Booked slots retrieved successfully',
+        slots: result
+      });
+    });
+  };
