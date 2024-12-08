@@ -1,1 +1,0 @@
-# LUCC-hackathon

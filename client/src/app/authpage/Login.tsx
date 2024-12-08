@@ -1,36 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import SubmitBtn from "../components/SubmitBtn";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuLabel,
-    DropdownMenuRadioGroup,
-    DropdownMenuRadioItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/SCdropdown-menu"
 import { Label } from "@/components/ui/SClabel";
 import { Input } from "@/components/ui/SCinput";
 import { cn } from "@/lib/utils";
 import Cookies from 'js-cookie';
-
-
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/SCselect"
-
-import {
-    IconBrandGithub,
-    IconBrandGoogle,
-    IconBrandOnlyfans,
-} from "@tabler/icons-react";
+import { Button } from "@/components/ui/button"
 
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import logo from "/public/images/logo.png";
 
 export default function SignupFormDemo(props: any) {
     const router = useRouter();
@@ -55,11 +33,11 @@ export default function SignupFormDemo(props: any) {
         const fetchUserData = async () => {
             const token = Cookies.get('token');
             if (token) {
-                router.push('/homepage'); // Redirect to login if no token is found
+                // router.push('/homepage'); // Redirect to login if no token is found
                 return;
             }
         }
-        fetchUserData()
+        // fetchUserData();
     },
         [router]
     )
@@ -107,23 +85,39 @@ export default function SignupFormDemo(props: any) {
 
     return (
 
-        <div className="flex h-screen w-screen justify-center items-center">
-            <div className="max-w-md w-screen mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
-                <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
-                    Welcome to Online Player Auction
-                </h2>
-                <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-                    Get the best players in the tournament with our analysis tools
-                </p>
+        <div className="flex  h-screen w-screen justify-center items-center">
 
-                <form className="my-4" onSubmit={handleSubmit}>
+
+
+        {/* left side  */}
+        <div className="w-1/2 h-screen flex flex-col justify-center items-center">
+
+        <Image
+      src={logo} // Path to your image
+      alt="MeetSync"
+      className=""
+      width={500} // Image width
+      height={100} // Image height
+    />
+
+    <h2 className="font-extralight  space-x-4 text-xl">Simplify Scheduling, Empower Productivity.</h2>
+
+
+        </div>
+
+
+            <div className="max-w-md w-screen shadow-2xl  mx-auto rounded-none md:rounded-md p-4 md:p-8 shadow-input bg-white dark:bg-black">
+                
+             
+
+                <form className="my-10" onSubmit={handleSubmit}>
                     {(isError) ?
                         <div className="font-bold bg-red-400 bg-opacity-50 rounded-lg my-2 p-2">
                             {error}
                         </div> : <div></div>
                     }
                     <LabelInputContainer className="mb-4">
-                        <Label htmlFor="email">Educational Email Address</Label>
+                        <Label htmlFor="email">Email</Label>
                         <Input id="email" placeholder="xyz12@student.sust.edu" type="email" value={email}
                             onChange={(e) => setEmail(e.target.value)} />
                     </LabelInputContainer>
@@ -137,14 +131,15 @@ export default function SignupFormDemo(props: any) {
                     </div>
 
                     <div className="flex justify-center w-full mb-4 ">
-                        <button type="submit" onClick={() => handleSubmit} className="px-8 w-full py-2 rounded-md bg-black text-white font-bold transition duration-200 hover:bg-white hover:text-black hover:border-2 hover:border-black border-2 border-white  ">
+                        <Button type="submit" variant='destructive' onClick={() => handleSubmit} className="px-8 w-full py-2 text-xl rounded-md bg-customRed  text-white font-bold transition duration-200 hover:bg-red-600 hover:shadow-lg   ">
                             Login
-                        </button>
+                        </Button>
+                      
                     </div>
 
 
                     <div className="flex justify-center mb-4">
-                        <Label onClick={handleRegister} htmlFor="password">Don't have any account ? <b>Register</b></Label>
+                        <Label onClick={handleRegister} htmlFor="password">Don&apos;t have any account ? <b>Register</b></Label>
                     </div>
 
                 </form>
