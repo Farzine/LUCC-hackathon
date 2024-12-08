@@ -5,14 +5,14 @@ const bcrypt = require('bcryptjs');
 const fs = require('fs');
 
 
-const isValidEmail = (email) => {
-  const regex = /^[a-zA-Z]+[0-9]*@student\.sust\.edu$/;
-  return regex.test(email);
-};
+// const isValidEmail = (email) => {
+//   const regex = /^[a-zA-Z]+[0-9]*@\.com$/;
+//   return regex.test(email);
+// };
 
 // Register new user
 exports.registerUser = (req, res) => {
-  const { name, email, phone, regNo, department, password,confirmPassword } = req.body;
+  const { name, email, password,confirmPassword } = req.body;
   const userPicUrl = req.file ? req.file.cloudinaryUrl : "https://res.cloudinary.com/dsd4b2lkg/image/upload/v1718475943/kxrcwdacnp1vdbrwai6k.png";
   // console.log(userPicUrl);
   
@@ -27,17 +27,13 @@ exports.registerUser = (req, res) => {
       
     }
 
-  if (!name || !phone || !regNo || !department || !password) {    
+  if (!name || !password) {    
     return res.status(400).json({ message: 'All fields are required' });
   }
   
   const newUser = {
     name,
     email,
-    phone,
-    regNo,
-    department,
-    userPicUrl,
     password
   };
   
