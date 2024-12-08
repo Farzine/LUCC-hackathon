@@ -2,9 +2,9 @@
 'use client';
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogTrigger
+    Dialog,
+    DialogContent,
+    DialogTrigger
 } from "@/components/ui/dialog";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -14,7 +14,7 @@ import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import { DataContext } from "../../../../ContextAPI/DataContext";
 import HostMeeting from "../profileComponets/HostMeeting";
 
-export default function MeetingCalendar() {
+export default function MyMeetingCalendar() {
   const { ProfileComponet, setProfileComponet,MeetingsPerDay,
     setMeetingsPerDay, } = useContext(DataContext);
  
@@ -22,15 +22,15 @@ export default function MeetingCalendar() {
 const [appointments, setAppointments] = useState([]);
 const token = Cookies.get('token');
 useEffect(() => {
-  axios.get('http://localhost:5000/api/slot/bookedslots', {
+  axios.get('http://localhost:5000/api/slot/myslots', {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
     }
   })
     .then(response => {
-      setAppointments(response.data.slots);
-      console.log(response.data.slots);
+      setAppointments(response.data);
+      console.log(response.data);
     })
     .catch(error => {
       console.error("There was an error fetching the appointments!", error);
@@ -81,7 +81,7 @@ useEffect(() => {
 
 
   const gotoDailyMeeting = (appointmentsForDay) => {
-    setProfileComponet('meetingsperday');
+    setProfileComponet('mymeetingsperday');
     setMeetingsPerDay(appointmentsForDay);
 
   };
@@ -96,7 +96,7 @@ useEffect(() => {
 
   return (
     <div className=" p-10 min-h-full">
-      <h1 className="text-3xl font-semibold my-4 ">All Meetings</h1>
+      <h1 className="text-3xl font-semibold my-4 ">My Meetings</h1>
       <h1 className="  my-4 ">here is the latest update for the last 30 days. check now</h1>
       <div className="w-full flex justify-start items-center gap-2  mb-4">
        
@@ -119,6 +119,10 @@ useEffect(() => {
         </Button>
       </div>
 
+{/* 
+<Button onClick={()=>setProfileComponet('meetingsperday')}>
+goto
+</Button> */}
 
 
   {/* host a meeting */}
@@ -199,7 +203,11 @@ useEffect(() => {
               {appointmentsForDay.map((appt, idx) => (
                 <div key={idx} className="mt-1 text-xs font-semibold text-white ">
                 { idx === 0 &&
-                <div className="flex items-center gap-2"> <AiOutlineSchedule className="h-8 w-8"/> Total Meetings {appointmentsForDay.length}</div>}
+                <div className="flex items-center gap-2"> <AiOutlineSchedule className="h-8 w-8"/> Total Meetings {appointmentsForDay.length}
+                
+    
+                
+                </div>}
                 {appt.time}
                 <br /> {appt.title}
                 </div>

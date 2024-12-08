@@ -12,7 +12,11 @@ export const DataProvider = ({ children }) => {
 //    Data state
     
     const [name, setname] = useState("Robin");
-    const [ProfileComponet, setProfileComponet] = useState("dashboard");
+    const [ProfileComponet, setProfileComponet] = useState("allmeetings");
+   const [MeetingsPerDay, setMeetingsPerDay] = useState([]);
+
+
+
     return (
         <DataContext.Provider value={{
         
@@ -20,6 +24,8 @@ export const DataProvider = ({ children }) => {
             setname,
             ProfileComponet,
              setProfileComponet,
+             MeetingsPerDay,
+             setMeetingsPerDay,
         }}>
             {children}
         </DataContext.Provider>

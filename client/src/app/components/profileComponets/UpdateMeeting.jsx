@@ -1,50 +1,43 @@
-// components/slots/CreateSlotForm.tsx
 "use client";
 
-import React, { useState } from 'react';
-import { Slot } from '../slots/Slot';
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation';
-import { cn } from '@/lib/utils';
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-interface CreateSlotFormProps {
-  onCreate: (newSlot: Slot) => void;
-}
-
-const CreateSlotForm: React.FC<CreateSlotFormProps> = ({ onCreate }) => {
+const UpdateMeeting = ({ slots }) => {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    slotName: '',
-    startTime: '',
-    endTime: '',
+    slotName: slots.slot_name || "",
+    startTime: new Date(slots.start_time).toISOString().slice(0, 16), // Pre-fill datetime-local
+    endTime: new Date(slots.end_time).toISOString().slice(0, 16), // Pre-fill datetime-local
   });
 
   const [loading, setLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  const validateForm = (): boolean => {
+  const validateForm = () => {
     const { slotName, startTime, endTime } = formData;
     if (!slotName || !startTime || !endTime) {
-      setErrorMessage('All fields are required.');
+      setErrorMessage("All fields are required.");
       return false;
     }
     if (new Date(startTime) >= new Date(endTime)) {
-      setErrorMessage('Start time must be before end time.');
+      setErrorMessage("Start time must be before end time.");
       return false;
     }
     return true;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage(null);
     setSuccessMessage(null);
@@ -55,55 +48,43 @@ const CreateSlotForm: React.FC<CreateSlotFormProps> = ({ onCreate }) => {
 
     setLoading(true);
 
-    const token = Cookies.get('token');
+    const token = Cookies.get("token");
 
     if (!token) {
-      router.push('/auth');
+      router.push("/auth");
       return;
     }
 
     const payload = {
+      slotId: slots.slot_id,
       slotName: formData.slotName,
       startTime: new Date(formData.startTime).toISOString(),
       endTime: new Date(formData.endTime).toISOString(),
     };
 
     try {
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000';
-      const response = await fetch(`${API_BASE_URL}/api/slot/create`, {
-        method: 'POST',
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
+      const response = await fetch(`${API_BASE_URL}/api/slot/updatemyslot`, {
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(payload),
       });
-
+    
       const data = await response.json();
 
       if (response.ok) {
-        setSuccessMessage(data.message || 'Slot created successfully.');
-        // Optionally, reset the form
-        setFormData({
-          slotName: '',
-          startTime: '',
-          endTime: '',
-        });
-        // Update parent component with the new slot
-        const newSlot: Slot = {
-          slot_id: data.slot.slot_id,
-          slot_name: data.slot.slot_name,
-          user_id: data.slot.user_id,
-          start_time: data.slot.start_time,
-          end_time: data.slot.end_time,
-        };
-        onCreate(newSlot);
+        setSuccessMessage(data.message || "Meeting updated successfully.");
+        // Call the onUpdate callback to update the parent state
+       
       } else {
-        setErrorMessage(data.message || 'Failed to create slot.');
+        setErrorMessage(data.message || "Failed to update meeting.");
       }
     } catch (error) {
-      console.error('Error creating slot:', error);
-      setErrorMessage('An unexpected error occurred.');
+      console.error("Error updating meeting:", error);
+      setErrorMessage("An unexpected error occurred.");
     } finally {
       setLoading(false);
     }
@@ -111,7 +92,7 @@ const CreateSlotForm: React.FC<CreateSlotFormProps> = ({ onCreate }) => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md mx-auto">
-      <h2 className="text-2xl font-semibold mb-4 text-center">Host a Meeting</h2>
+      <h2 className="text-2xl font-semibold mb-4 text-center">Update Meeting</h2>
 
       {successMessage && (
         <div className="mb-4 p-4 bg-green-100 text-green-700 rounded">
@@ -137,8 +118,8 @@ const CreateSlotForm: React.FC<CreateSlotFormProps> = ({ onCreate }) => {
             name="slotName"
             value={formData.slotName}
             onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-customRed focus:border-customRed"
-            placeholder="Enter Meeting name"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Enter meeting name"
             required
           />
         </div>
@@ -154,7 +135,7 @@ const CreateSlotForm: React.FC<CreateSlotFormProps> = ({ onCreate }) => {
             name="startTime"
             value={formData.startTime}
             onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-customRed focus:border-customRed"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             required
           />
         </div>
@@ -170,7 +151,7 @@ const CreateSlotForm: React.FC<CreateSlotFormProps> = ({ onCreate }) => {
             name="endTime"
             value={formData.endTime}
             onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-customRed focus:border-customRed"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             required
           />
         </div>
@@ -179,13 +160,12 @@ const CreateSlotForm: React.FC<CreateSlotFormProps> = ({ onCreate }) => {
         <div>
           <button
             type="submit"
-            className={cn(
-              "w-full px-4 py-2 rounded-md bg-customRed text-white font-semibold hover:bg-red-600 transition-colors",
+            className={`w-full px-4 py-2 rounded-md bg-blue-500 text-white font-semibold hover:bg-blue-600 transition-colors ${
               loading ? "opacity-50 cursor-not-allowed" : ""
-            )}
+            }`}
             disabled={loading}
           >
-            {loading ? "Creating..." : "Create Slot"}
+            {loading ? "Updating..." : "Update Meeting"}
           </button>
         </div>
       </form>
@@ -193,4 +173,4 @@ const CreateSlotForm: React.FC<CreateSlotFormProps> = ({ onCreate }) => {
   );
 };
 
-export default CreateSlotForm;
+export default UpdateMeeting;

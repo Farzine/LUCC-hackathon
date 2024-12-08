@@ -5,16 +5,24 @@ import { useContext } from "react";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { DataContext } from "../../../ContextAPI/DataContext";
 import MeetingCalendar from "../components/profileComponets/MeetingCalender";
+import MeetingsPerDay from "../components/profileComponets/MeetingsPerDay";
+import MyMeetingCalender from "../components/profileComponets/MyMeetingCalender";
+import MyMeetingPerDay from "../components/profileComponets/MyMeetingsPerDay"
 import logo from "/public/images/logo-no-bg.png";
-
-
-
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger
+} from "@/components/ui/dialog";
+import axios from "axios";
 export default function Page() {
   const { ProfileComponet, setProfileComponet } = useContext(DataContext);
 
+  console.log(ProfileComponet);
+
   return (
-    <div className=" flex w-full bg-white  h-screen">
-      <div className=" w-1/6  shadow-lg h-screen px-4 left">
+    <div className=" flex w-full bg-white  h-auto">
+      <div className=" w-1/6  shadow-lg h-auto px-4 left">
         <Image
           src={logo} // Path to your image
           alt="MeetSync"
@@ -31,41 +39,36 @@ export default function Page() {
         <div className="mt-5  ">
           <ul>
             <li
-              onClick={setProfileComponet("dashboard")}
+              onClick={() => setProfileComponet("dashboard")}
               className="p-2 w-full h-10 hover:border-r-4 hover:bg-red-100  hover:cursor-pointer hover:border-r-red-500 flex items-center gap-2"
             >
               <MdOutlineSpaceDashboard />
               Dashboard
             </li>
             <li
-              onClick={setProfileComponet("allmeetings")}
+              onClick={() => setProfileComponet("allmeetings")}
               className="p-2 w-full h-10 hover:border-r-4 hover:bg-red-100  hover:cursor-pointer hover:border-r-red-500"
             >
               All Meetings
             </li>
-            <li className="p-2 w-full h-10 hover:border-r-4 hover:bg-red-100  hover:cursor-pointer  hover:border-r-red-500">
-              AI Assistant
+            <li 
+            onClick={() => setProfileComponet("mymeetings")}
+            className="p-2 w-full h-10 hover:border-r-4 hover:bg-red-100  hover:cursor-pointer  hover:border-r-red-500">
+              My Meetings
             </li>
-            <li className="p-2 w-full h-10 hover:border-r-4 hover:bg-red-100 hover:cursor-pointer hover:border-r-red-500">
-              Create Meeting
-            </li>
+            
           </ul>
         </div>
       </div>
 
       {/* render componet here  */}
 
-      <div className="w-5/6 border  h-screen right ">
-
-
-
-
-
-
+      <div className="w-5/6 border bg-slate-50 h-auto right ">
         {/* {ProfileComponet==='dashboard' && <Dashboard />} */}
-        {ProfileComponet === "allmeetings" && (
-          <MeetingCalendar  />
-        )}
+        {ProfileComponet === "allmeetings" && <MeetingCalendar />}
+        {ProfileComponet === "meetingsperday" && <MeetingsPerDay />}
+        {ProfileComponet === "mymeetings" && <MyMeetingCalender />}
+        {ProfileComponet === "mymeetingsperday" && <MyMeetingPerDay />}
       </div>
       {/* <MeetingCalender appointments={appointments} /> */}
     </div>
