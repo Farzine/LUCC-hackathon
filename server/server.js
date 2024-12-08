@@ -60,3 +60,4 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 // update bookingRequest put- http://localhost:5000/api/booking/book/updatebooking
 
 // slot status get- http://localhost:5000/api/dashboard/slotstatus
+// daily slots bookings get- http://localhost:5000/api/dashboard/dailybookings
