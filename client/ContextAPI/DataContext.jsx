@@ -10,18 +10,16 @@ export const useDataContext = () => useContext(DataContext);
 // Context provider component
 export const DataProvider = ({ children }) => {
 //    Data state
-    const data = 'Hello, world!';
-    const doSomething = () => {
-        console.log('Doing something...');
-    };
+    
     const [name, setname] = useState("Robin");
-
+    const [ProfileComponet, setProfileComponet] = useState("meetingcalender");
     return (
         <DataContext.Provider value={{
-            data,
-            doSomething,
+        
             name, 
             setname,
+            ProfileComponet,
+             setProfileComponet,
         }}>
             {children}
         </DataContext.Provider>

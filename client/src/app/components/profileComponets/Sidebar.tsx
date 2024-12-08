@@ -3,7 +3,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Avatar, AvatarImage, AvatarFallback } from '../profileComponets/Avatar';
+import { Avatar, AvatarImage, AvatarFallback } from './Avatar';
+
 
 
 interface Profile {
