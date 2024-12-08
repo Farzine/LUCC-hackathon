@@ -42,3 +42,4 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 //register route post-http://localhost:5000/api/auth/register
 //login route post-http://localhost:5000/api/auth/login
 //login route post-http://localhost:5000/api/user/update-user
+//create slot post-http://localhost:5000/api/auction/create

@@ -15,6 +15,7 @@ const { upload, uploadToCloudinary } = require('../middlewares/cloudinaryMiddlew
 const slotRouter = express.Router();
 
  slotRouter.post('/create', protect, createNewSlot);
+ 
 // slotRouter.post('/players', protect, getPlayersByTournamentId);
 // slotRouter.post('/team_details_manager', protect, team_details_manager);
 // slotRouter.post('/start', protect, startAuction);
