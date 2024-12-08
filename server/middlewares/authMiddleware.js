@@ -10,7 +10,7 @@ const protect = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    User.findByRegNo(decoded.id, (err, users) => {
+    User.findByUserId(decoded.id, (err, users) => {
       if (err || users.length === 0) {
         return res.status(401).json({ message: 'Not authorized' });
       }

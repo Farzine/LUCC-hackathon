@@ -5,11 +5,11 @@ const fs = require('fs');
 
 
 exports.updateUser = (req, res) => {
-  const { email, password, name, phone, newPassword } = req.body;
+  const { email, password, name, newPassword, timeZone } = req.body;
   const userPicUrl = req.file ? req.file.cloudinaryUrl : null;
-  const regNo = req.user.reg_no;
+  const userId = req.user.user_id; // Ensure your auth middleware sets req.user.user_id
 
-  // Confirm email and password
+  // Confirm email and password for authentication
   User.findByEmail(email, (err, users) => {
     if (err || users.length === 0) {
       return res.status(401).json({ message: 'Invalid email' });
@@ -23,14 +23,13 @@ exports.updateUser = (req, res) => {
     const updatedUser = {};
 
     if (name) updatedUser.name = name;
-    if (phone) updatedUser.phone = phone;
     if (userPicUrl) updatedUser.userPicUrl = userPicUrl;
+    if (timeZone) updatedUser.timeZone = timeZone;
     if (newPassword) {
       updatedUser.password = bcrypt.hashSync(newPassword, 10);
     }
-    
 
-    User.update(regNo, updatedUser, (err, result) => {
+    User.update(userId, updatedUser, (err, result) => {
       if (err) {
         return res.status(500).json({ message: 'Error updating user', error: err });
       }
@@ -38,6 +37,13 @@ exports.updateUser = (req, res) => {
     });
   });
 };
+
+
+
+
+
+
+
 
 exports.createTournament = (req, res) => {
   const { tournamentName, sportType, tournamentDate, playerBaseCoin, perTeamCoin,num_of_player } = req.body;  

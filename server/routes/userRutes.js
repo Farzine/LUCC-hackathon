@@ -1,11 +1,14 @@
 const express = require('express');
-const { updateUser, createTournament,startAuction, updateTournament, getUserDetails, getCurrentTournamentDetails, getUserParticipatedTournaments, joinTournament, getMemberRequests, acceptMemberRequest, rejectMemberRequest, getPlayersByTournament, updatePlayerCategories, getTeamDetailsByManager,getTeamDetailsByPlayer,getTeamPlayersByPlayer, getTournamentDetailsWithTeams, getTeamsInTournament,findTournamentRoleByUser,getTournamentInfo,getPlayersInTeam  } = require('../controllers/homeController');
+const { updateUser, createTournament,startAuction, updateTournament, getUserDetails, getCurrentTournamentDetails, getUserParticipatedTournaments, joinTournament, getMemberRequests, acceptMemberRequest, rejectMemberRequest, getPlayersByTournament, updatePlayerCategories, getTeamDetailsByManager,getTeamDetailsByPlayer,getTeamPlayersByPlayer, getTournamentDetailsWithTeams, getTeamsInTournament,findTournamentRoleByUser,getTournamentInfo,getPlayersInTeam  } = require('../controllers/UserController');
 const {protect} = require('../middlewares/authMiddleware');
 const { upload, uploadToCloudinary } = require('../middlewares/cloudinaryMiddleware');
 const router = express.Router();
 
 // home page routes
 router.post('/update-user', protect, upload.single('userPicUrl'),uploadToCloudinary, updateUser);
+
+
+
 router.get('/participated-tournaments', protect, getUserParticipatedTournaments);
 router.get('/user-details', protect, getUserDetails);
 

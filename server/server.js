@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/authRoutes');
-const homeRoutes = require('./routes/homeRoutes');
+const homeRoutes = require('./routes/userRutes');
 const auctionRouter = require('./routes/auctionRoutes');
 const cookieParser = require('cookie-parser');
 const cloudinary = require('cloudinary').v2;
@@ -31,7 +31,7 @@ app.use(cookieParser());
 
 
 app.use('/api/auth', authRoutes);
-app.use('/api/home', homeRoutes);
+app.use('/api/user', homeRoutes);
 app.use('/api/auction', auctionRouter);
 
 
@@ -41,3 +41,4 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 //register route post-http://localhost:5000/api/auth/register
 //login route post-http://localhost:5000/api/auth/login
+//login route post-http://localhost:5000/api/user/update-user
