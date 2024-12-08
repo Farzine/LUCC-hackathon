@@ -29,12 +29,26 @@ exports.createNewSlot = (req, res) => {
     }
 
     // If no overlap, proceed with inserting the new slot
-    const query = 'INSERT INTO slots (slot_id, slot_name, user_id, start_time, end_time) VALUES (?, ?, ?, ?, ?)';
-    db.query(query, [slotId, slotName, userId, startTime, endTime], (err, result) => {
+    const insertSlotQuery = 'INSERT INTO slots (slot_id, slot_name, user_id, start_time, end_time) VALUES (?, ?, ?, ?, ?)';
+    db.query(insertSlotQuery, [slotId, slotName, userId, startTime, endTime], (err, result) => {
       if (err) {
         return res.status(500).json({ message: 'Error creating new slot', error: err });
       }
-      res.status(200).json({ message: 'Slot created successfully', slot: result });
+
+      // Insert the booking for the user as 'host'
+      const bookingId = uuidv4();
+      const insertBookingQuery = 'INSERT INTO booking (booking_id, slot_id, user_id, role) VALUES (?, ?, ?, ?)';
+      db.query(insertBookingQuery, [bookingId, slotId, userId, 'host'], (err, bookingResult) => {
+        if (err) {
+          return res.status(500).json({ message: 'Error creating booking', error: err });
+        }
+
+        res.status(200).json({
+          message: 'Slot created successfully and booking as host created.',
+          slot: result,
+          booking: bookingResult
+        });
+      });
     });
   });
 };
