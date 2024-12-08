@@ -74,3 +74,28 @@ exports.updateBookingRequestStatus = (req, res) => {
     });
   };
 
+
+
+  // Function to fetch booking details from the database
+exports.getBookingDetails =(req, res) => { // Get the user ID from the authenticated user
+    const { userId, slotId } = req.body; 
+    return new Promise((resolve, reject) => {
+      const query = `
+        SELECT booking_id, role 
+        FROM booking 
+        WHERE user_id = ? AND slot_id = ?
+      `;
+      
+      // Execute the query
+      db.query(query, [userId, slotId], (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results[0]); // Assuming only one result is expected
+        }
+      });
+    });
+  }
+  
+
+

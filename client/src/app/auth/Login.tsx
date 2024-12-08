@@ -78,6 +78,7 @@ export default function SignupFormDemo(props: any) {
                 const data = await response.json();
                 Cookies.set('token', data.token);
                 localStorage.setItem('user_id', data.user_id);
+                localStorage.setItem('user',data.user );
                 toast.success("Logged In Successfully", {
                     duration: 2000,
                     style: {

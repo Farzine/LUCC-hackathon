@@ -78,7 +78,8 @@ exports.authUser = (req, res) => {
       res.cookie('token', token, { maxAge: 30 * 24 * 60 * 60 * 1000 });
       res.json({ 
         token: token,
-        user_id:user.user_id
+        user_id:user.user_id,
+        user:user
 
        });
     } else {
