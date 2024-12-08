@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import { Label } from "@/components/ui/SClabel";
 import { Input } from "@/components/ui/SCinput";
 import { cn } from "@/lib/utils";
-import UploadIImg from "../components/UploadImg";
+import UploadIImg from "../components/profileComponets/UploadImg";
 import { Button } from "@/components/ui/button";
 
 export default function SignupFormDemo(props: any) {

@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
-import { Avatar, AvatarImage, AvatarFallback } from '../components/Avatar';
+import { Avatar, AvatarImage, AvatarFallback } from './Avatar';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 

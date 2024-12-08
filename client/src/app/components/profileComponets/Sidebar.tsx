@@ -3,7 +3,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Avatar, AvatarImage, AvatarFallback } from '../components/Avatar';
+import { Avatar, AvatarImage, AvatarFallback } from './Avatar';
 import { cn } from '@/lib/utils';
 
 
