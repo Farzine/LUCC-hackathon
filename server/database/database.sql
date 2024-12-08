@@ -1,4 +1,6 @@
-CREATE DATABASE webproject;
+CREATE DATABASE lucc;
+
+use lucc;
 
 CREATE TABLE users (
   reg_no  VARCHAR(50) PRIMARY KEY,
