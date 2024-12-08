@@ -41,51 +41,6 @@ exports.updateUser = (req, res) => {
 
 
 
-
-
-
-
-exports.createTournament = (req, res) => {
-  const { tournamentName, sportType, tournamentDate, playerBaseCoin, perTeamCoin,num_of_player } = req.body;  
-  const logoPicUrl = req.file ? req.file.cloudinaryUrl : "https://res.cloudinary.com/dsd4b2lkg/image/upload/v1718476640/rmxa26ctdkr4m0jrgwog.png";
-  const regNo = req.user.reg_no;
-  const joinCode = Math.random().toString(36).substr(2, 9); // Generate a random join code
-
-  const newTournament = {
-    tournamentName,
-    sportType,
-    tournamentDate,
-    playerBaseCoin,
-    perTeamCoin,
-    logoPicUrl,
-    regNo,
-    joinCode,
-    num_of_player
-  };
-
-  User.createTournament(newTournament, (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: 'Error creating tournament', error: err });
-    }
-
-    const tournamentId = result.insertId;
-
-    // Add the creator to the participated_tournament table as admin
-    const participationData = {
-      tournamentId: tournamentId,
-      regNo: regNo,
-      role: 'admin'
-    };
-
-    User.createParticipatedTournament(participationData, (err) => {
-      if (err) {
-        return res.status(500).json({ message: 'Error adding creator to participated_tournament', error: err });
-      }
-      res.status(201).json({ message: 'Tournament created successfully', tournamentId: tournamentId });
-    });
-  });
-};
-
 exports.startAuction = (req, res) => {
   const { tournament_id} = req.body;
   User.startAuction(tournament_id,(err, result) => {
