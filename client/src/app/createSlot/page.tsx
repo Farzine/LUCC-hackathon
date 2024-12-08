@@ -98,7 +98,7 @@ const CreateSlotPage: React.FC = () => {
           onClick={handleLogout}
           className="px-4 py-2 bg-customRed text-white rounded-md hover:bg-red-600 transition-colors"
         >
-          Log Out
+          Update Slot
         </button>
       </div>
 
