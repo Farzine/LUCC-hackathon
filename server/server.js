@@ -2,8 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/authRoutes');
 const homeRoutes = require('./routes/userRutes');
-const auctionRouter = require('./routes/slotRoutes');
+const slotRouter = require('./routes/slotRoutes');
 const searchRoutes = require('./routes/slotRoutes');
+const bookings= require('./routes/bookingReqRoute')
+
 const cookieParser = require('cookie-parser');
 const cloudinary = require('cloudinary').v2;
 const cors = require("cors");
@@ -33,7 +35,7 @@ app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/user', homeRoutes);
-app.use('/api/auction', auctionRouter);
+app.use('/api/slot', slotRouter);
 app.use('/api/search', searchRoutes);
 
 
@@ -44,9 +46,9 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 //register route post-http://localhost:5000/api/auth/register
 //login route post-http://localhost:5000/api/auth/login
 //login route post-http://localhost:5000/api/user/update-user
-//create slot post-http://localhost:5000/api/auction/create
-//create slot post-http://localhost:5000/api/auction/myslots
-////create slot post-http://localhost:5000/api/auction/updatemyslot
+//create slot post-http://localhost:5000/api/slot/create
+//create slot post-http://localhost:5000/api/slot/myslots
+////create slot post-http://localhost:5000/api/slot/updatemyslot
 //logout route post-http://localhost:5000/api/auth/logout
 //create search route post-http://localhost:5000/api/search/create-search
 //get user details get-http://localhost:5000/api/user/user-details
