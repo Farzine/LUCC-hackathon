@@ -43,10 +43,22 @@ exports.createNewSlot = (req, res) => {
           return res.status(500).json({ message: 'Error creating booking', error: err });
         }
 
-        res.status(200).json({
-          message: 'Slot created successfully and booking as host created.',
-          slot: result,
-          booking: bookingResult
+        const notificationId = uuidv4();  // Unique notification ID
+        const insertNotificationQuery = 'INSERT INTO user_notification (notification_id, user_id, message) VALUES (?, ?, ?)';
+        const notificationMessage = `Your slot "${slotName}" has been successfully created.`;
+        
+        db.query(insertNotificationQuery, [notificationId, userId, notificationMessage], (err, notificationResult) => {
+          if (err) {
+            return res.status(500).json({ message: 'Error creating notification', error: err });
+          }
+
+          // Return a success response
+          res.status(200).json({
+            message: `Slot "${slotName}" created successfully, booking as host created, and notification sent.`,
+            slot: result,
+            booking: bookingResult,
+            notification: notificationResult
+          });
         });
       });
     });
