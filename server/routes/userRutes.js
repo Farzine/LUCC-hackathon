@@ -6,11 +6,11 @@ const router = express.Router();
 
 // home page routes
 router.post('/update-user', protect, upload.single('userPicUrl'),uploadToCloudinary, updateUser);
-
+router.get('/user-details', protect, getUserDetails);
 
 
 // router.get('/participated-tournaments', protect, getUserParticipatedTournaments);
-// router.get('/user-details', protect, getUserDetails);
+
 
 // // create tournament routes
 // router.post('/create-tournament', protect, upload.single('logoPicUrl'), uploadToCloudinary, createTournament);

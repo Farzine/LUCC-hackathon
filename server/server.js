@@ -48,3 +48,4 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 //create slot post-http://localhost:5000/api/auction/myslots
 //logout route post-http://localhost:5000/api/auth/logout
 //create search route post-http://localhost:5000/api/search/create-search
+//get user details get-http://localhost:5000/api/user/user-details
