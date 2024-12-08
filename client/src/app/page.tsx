@@ -2,9 +2,8 @@
 import React from "react";
 import { Boxes } from "@/components/ui/ACbackground-boxes";
 import { cn } from "@/lib/utils";
-import { Input } from "@/components/ui/SCinput";
-import { IoSearch } from "react-icons/io5";
 import Link from "next/link";
+
 
 export default function Home() {
   return (
@@ -25,7 +24,7 @@ export default function Home() {
           />
         </div>
 
-        <Link href="/authpage">
+        <Link href="/auth">
           <button className="mx-2 px-8 py-2 rounded-md bg-slate-700 text-white font-bold transition duration-200 hover:bg-white hover:text-black hover:border-2 hover:border-black border-2 border-white  ">
             Get Started
           </button>

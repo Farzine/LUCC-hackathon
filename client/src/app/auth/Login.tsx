@@ -5,11 +5,10 @@ import { Input } from "@/components/ui/SCinput";
 import { cn } from "@/lib/utils";
 import Cookies from 'js-cookie';
 import { Button } from "@/components/ui/button"
-
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import logo from "/public/images/logo.png";
-
 export default function SignupFormDemo(props: any) {
     const router = useRouter();
     const [email, setEmail] = useState("");
@@ -37,10 +36,11 @@ export default function SignupFormDemo(props: any) {
                 return;
             }
         }
-        // fetchUserData();
+        fetchUserData();
     },
         [router]
     )
+
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -61,13 +61,33 @@ export default function SignupFormDemo(props: any) {
 
             if (!response.ok) {
                 const errorData = await response.json();
+
+                toast.error(errorData.message || "Login failed", {
+                    duration: 2000,
+                    style: {
+                      backgroundColor: "#fff",
+                      color: "#a63939", //red
+                      borderColor: "#a63939",
+                    },
+                  });
+
                 setisError(true);
-                setError(errorData.message || "Error while logging in");
+                // setError(errorData.message || "Error while logging in");
+                
             } else {
                 const data = await response.json();
                 Cookies.set('token', data.token);
+                
+                toast.success("Logged In Successfully", {
+                    duration: 2000,
+                    style: {
+                      backgroundColor: "#fff",
+                      color: "#16a34a", //green
+                      borderColor: "#16a34a",
+                    },
+                  });
 
-                router.push('/homepage') //router push to homepage
+                router.push('/profile') //router push to homepage
                 console.log("//router push to homepage");
             }
 
@@ -118,12 +138,12 @@ export default function SignupFormDemo(props: any) {
                     }
                     <LabelInputContainer className="mb-4">
                         <Label htmlFor="email">Email</Label>
-                        <Input id="email" placeholder="xyz12@student.sust.edu" type="email" value={email}
+                        <Input required id="email" placeholder="xyz12@student.sust.edu" type="email" value={email}
                             onChange={(e) => setEmail(e.target.value)} />
                     </LabelInputContainer>
                     <LabelInputContainer className="mb-4">
                         <Label htmlFor="password">Password</Label>
-                        <Input id="password" placeholder="••••••••" type="password" value={password}
+                        <Input required id="password" placeholder="••••••••" type="password" value={password}
                             onChange={(e) => setPassword(e.target.value)} />
                     </LabelInputContainer>
                     <div className="flex justify-end mb-4">
@@ -139,7 +159,7 @@ export default function SignupFormDemo(props: any) {
 
 
                     <div className="flex justify-center mb-4">
-                        <Label onClick={handleRegister} htmlFor="password">Don&apos;t have any account ? <b>Register</b></Label>
+                        <Label onClick={handleRegister} htmlFor="password">Don&apos;t have any account ? <b className="hover:cursor-pointer hover:underline">Register</b></Label>
                     </div>
 
                 </form>
