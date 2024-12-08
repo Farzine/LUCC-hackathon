@@ -37,6 +37,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/user', homeRoutes);
 app.use('/api/slot', slotRouter);
 app.use('/api/search', searchRoutes);
+app.use('/api/booking', bookings)
 
 
 const PORT = process.env.PORT || 5000;
@@ -52,3 +53,5 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 //logout route post-http://localhost:5000/api/auth/logout
 //create search route post-http://localhost:5000/api/search/create-search
 //get user details get-http://localhost:5000/api/user/user-details
+// bookingRequest post- http://localhost:5000/api/booking/book
+// update bookingRequest put- http://localhost:5000/api/booking/book/updatebooking

@@ -29,3 +29,48 @@ exports.makeBookingRequest = (req, res) => {
     });
 }
 
+exports.updateBookingRequestStatus = (req, res) => {
+    const userId = req.user.user_id;  // Get the user ID from the authenticated user
+    const { requestId, newStatus } = req.body;  // Extract requestId and newStatus from the request body
+  
+    // Validate that the newStatus is either 'accepted' or 'rejected'
+    if (!['accepted', 'rejected'].includes(newStatus)) {
+      return res.status(400).json({ message: 'Invalid status. It should be either "accepted" or "rejected".' });
+    }
+  
+    // First, check if the user is a 'host' by querying the 'booking' table
+    const checkHostQuery = 'SELECT * FROM booking WHERE user_id = ? AND role = "host"';
+  
+    db.query(checkHostQuery, [userId], (err, hostResult) => {
+      if (err) {
+        return res.status(500).json({ message: 'Error checking user role', error: err });
+      }
+  
+      if (hostResult.length === 0) {
+        return res.status(403).json({ message: 'Only the host can update the booking request status.' });
+      }
+  
+      // If the user is a host, proceed to update the booking request status
+      const updateStatusQuery = 'UPDATE booking_request SET status = ? WHERE request_id = ?';
+  
+      db.query(updateStatusQuery, [newStatus, requestId], (err, updateResult) => {
+        if (err) {
+          return res.status(500).json({ message: 'Error updating booking request status', error: err });
+        }
+  
+        if (updateResult.affectedRows === 0) {
+          return res.status(404).json({ message: 'Booking request not found.' });
+        }
+  
+        // Return a success response after the status is updated
+        res.status(200).json({
+          message: `Booking request status updated to ${newStatus}`,
+          bookingRequest: {
+            request_id: requestId,
+            status: newStatus,
+          },
+        });
+      });
+    });
+  };
+
