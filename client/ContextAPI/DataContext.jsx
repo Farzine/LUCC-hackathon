@@ -1,5 +1,5 @@
 'use client';
-import React, { createContext, useState,useContext } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 // Create a new context
 const DataContext = createContext();
@@ -12,7 +12,7 @@ export const DataProvider = ({ children }) => {
 //    Data state
     
     const [name, setname] = useState("Robin");
-    const [ProfileComponet, setProfileComponet] = useState("meetingcalender");
+    const [ProfileComponet, setProfileComponet] = useState("dashboard");
     return (
         <DataContext.Provider value={{
         
