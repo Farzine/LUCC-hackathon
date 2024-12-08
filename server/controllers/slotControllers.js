@@ -1,10 +1,15 @@
 const bcrypt = require('bcryptjs');
 const fs = require('fs');
 const AuctionModels = require('../models/auctionModels');
+const db = require('../config/db');
+import { uuid } from 'uuidv4';
 
-exports.getTeamsByTournamentId = (req, res) => {
-    const { tournamentId } = req.body;
-    AuctionModels.getTeamsByTournamentId(tournamentId, (err, teams) => {
+exports.createNewSlot = (req, res) => {
+  userId= req.user.user_id;
+  slotId= uuid();
+    const { slotName, startTime, endTime  } = req.body;
+    const query= 'INSERT INTO slots (slot_id, slot_name, user_id, start_time, end_time ) VALUES (? ,?, ?, ?, ?)'
+    db.query(query, [slotId,slotName, userId, startTime, endTime ], (err, teams) => {
       if (err) {
         return res.status(500).json({ message: 'Error fetching teams', error: err });
       }
