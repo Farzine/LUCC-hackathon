@@ -16,7 +16,7 @@ CREATE TABLE slots(
   user_id VARCHAR(50) NOT NULL,
   start_time DATETIME NOT NULL,
   end_time DATETIME NOT NULL,
-  status ENUM('available', 'booked') NOT NULL DEFAULT 'available',
+  status ENUM('available', 'booked') NOT NULL DEFAULT 'booked',
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users (user_id)
 );

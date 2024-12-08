@@ -15,6 +15,7 @@ const Chatbot = () => {
       setMessages(prevMessages => [...prevMessages, userMessage]);
       setInput('');
       setIsTyping(true);
+      const userId= localStorage.getItem('user_id');
 
       try {
         // Send the user's message to the backend API and get the chatbot's response
@@ -23,7 +24,7 @@ const Chatbot = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ message: input }),
+          body: JSON.stringify({ message: input, user_id:userId }),
         });
 
         if (!response.ok) {
@@ -54,7 +55,7 @@ const Chatbot = () => {
   };
 
   return (
-    <div className="flex flex-col w-full max-w-lg h-full ml-96 bg-white shadow-2xl rounded-3xl overflow-hidden">
+    <div className="flex flex-col w-full max-w-lg h-[600px] ml-96 bg-white shadow-2xl rounded-3xl overflow-hidden">
       {/* Header with Close Button */}
       <div className="flex justify-between items-center bg-indigo-700 p-4 text-white rounded-t-3xl shadow-md">
         <h1 className="text-2xl font-semibold">Chat with Assistant</h1>
@@ -64,14 +65,14 @@ const Chatbot = () => {
       </div>
 
       {/* Chatbox - Message Area */}
-      <div className="flex-1 p-6 overflow-y-auto space-y-4 bg-gray-50 rounded-lg shadow-inner">
+      <div className="flex-1 p-6 overflow-x-auto space-x-4 bg-gray-50 rounded-lg shadow-inner whitespace-nowrap">
         {messages.map((msg, index) => (
           <div
             key={index}
             className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`max-w-xs p-3 rounded-lg text-sm text-white break-words ${msg.sender === 'user' ? 'bg-indigo-600' : 'bg-gray-800 text-gray-800'}`}
+              className={`max-w-xs p-3 rounded-lg text-sm text-white break-words ${msg.sender === 'user' ? 'bg-indigo-600 text-wrap' : 'bg-gray-800 m-4 p-0 text-wrap text-gray-800'}`}
             >
               {msg.text}
             </div>

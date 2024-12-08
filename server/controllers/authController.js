@@ -8,13 +8,13 @@ const fs = require('fs');
 function isValidEmail(email) {
   // Adjust if you have specific domain validation
   const domain = email.split('@')[1];
-  return domain ;
+  return domain;
 }
 
 exports.registerUser = (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
   const userPicUrl = req.file ? req.file.cloudinaryUrl : "https://res.cloudinary.com/dsd4b2lkg/image/upload/v1718475943/kxrcwdacnp1vdbrwai6k.png";
-  
+
   // Validate email domain
   if (!isValidEmail(email)) {
     return res.status(400).json({ message: 'Invalid email domain.' });
@@ -76,7 +76,11 @@ exports.authUser = (req, res) => {
     if (bcrypt.compareSync(password, user.password)) {
       const token = generateToken(user.user_id);
       res.cookie('token', token, { maxAge: 30 * 24 * 60 * 60 * 1000 });
-      res.json({ token });
+      res.json({ 
+        token: token,
+        user_id:user.user_id
+
+       });
     } else {
       res.status(401).json({ message: 'Invalid email or password' });
     }
