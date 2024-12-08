@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const fs = require('fs');
 const AuctionModels = require('../models/auctionModels');
 const db = require('../config/db');
-import { uuid } from 'uuidv4';
+const { v4: uuidv4 } = require('uuid'); 
 
 exports.createNewSlot = (req, res) => {
   userId= req.user.user_id;
