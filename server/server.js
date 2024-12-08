@@ -1,5 +1,5 @@
 const express = require('express');
-const { specs, swaggerUi } = require('./swagger');
+
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/authRoutes');
 const homeRoutes = require('./routes/homeRoutes');
