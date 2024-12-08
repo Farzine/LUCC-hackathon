@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Label } from "@/components/ui/SClabel";
-import { Input } from "@/components/ui/SCinput";
+import { Label } from "../../components/ui/SClabel";
+import { Input } from "../../components/ui/SCinput";
 import { cn } from "@/lib/utils";
 import Cookies from 'js-cookie';
-import { Button } from "@/components/ui/button"
+import { Button } from "../../components/ui/button"
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Image from "next/image";

@@ -6,8 +6,7 @@ import Cookies from 'js-cookie';
 import { Label } from "@/components/ui/SClabel";
 import { Input } from "@/components/ui/SCinput";
 import { cn } from "@/lib/utils";
-import { Value } from "@radix-ui/react-select";
-import UploadIImg from "../components/UploadIImg";
+import UploadIImg from "../components/UploadImg";
 import { Button } from "@/components/ui/button";
 
 export default function SignupFormDemo(props: any) {
