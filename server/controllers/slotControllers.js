@@ -18,4 +18,17 @@ exports.createNewSlot = (req, res) => {
     });
   };
 
+  exports.getMySlots = (req, res) => {  // Use getMyslots here, not getMySlots
+    console.log(req.user)
+    const userId = req.user.user_id;
+    const query = 'SELECT * FROM slots WHERE user_id = ?';
+  
+    db.query(query, [userId], (err, result) => {
+      if (err) {
+        return res.status(500).json({ message: 'Error fetching slots', error: err });
+      }
+      res.status(200).json(result);  // Send back the result from the DB
+    });
+  };
+
 
