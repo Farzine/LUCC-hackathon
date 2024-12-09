@@ -8,6 +8,7 @@ const bookings= require('./routes/bookingReqRoute')
 const dashboard= require('./routes/dashboardRoute')
 const notice= require('./routes/noticeRouter')
 const bookingRequest = require('./routes/bookingRoutes');
+const csv = require('./routes/guestRoutes');
 const cookieParser = require('cookie-parser');
 const cloudinary = require('cloudinary').v2;
 const cors = require("cors");
@@ -43,6 +44,7 @@ app.use('/api/booking', bookings);
 app.use('/api/dashboard', dashboard)
 app.use('/api/notice', notice)
 app.use('/api/request', bookingRequest);
+app.use('/api/csv', csv);
 
 
 const PORT = process.env.PORT || 5000;
@@ -72,4 +74,5 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 // get user role get- http://localhost:5000/api/booking/get-role
 // get booking request get- http://localhost:5000/api/request/host/:hostId/bookings
 // update booking request status post- http://localhost:5000/api/request/booking-request/status
+// get all guests csv get- http://localhost:5000/api/csv/guests/:slotId
 
