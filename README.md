@@ -38,11 +38,25 @@ npm install
 npm run dev
 ```
 
-Step 3: Set Up the Server
+### Step 3: Set Up the Server
 Navigate to the server directory:
 
 ```bash
 cd ../server
 npm install
 npm start
+```
+
+### `.env`- Environment variables
+unmount the .sql file in `server/database/database.sql` for the database and pass your other variables here:
+```bash
+CLOUDINARY_CLOUD_NAME= 
+CLOUDINARY_API_KEY= 
+CLOUDINARY_API_SECRET=
+JWT_SECRET= 
+DB_HOST=
+DB_USER=
+DB_PASSWORD=
+DB_NAME=
+PORT=
 ```
