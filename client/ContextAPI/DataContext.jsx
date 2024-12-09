@@ -15,22 +15,7 @@ export const DataProvider = ({ children }) => {
     const [ProfileComponet, setProfileComponet] = useState("allmeetings");
    const [MeetingsPerDay, setMeetingsPerDay] = useState([]);
 
-   localStorage.setItem('pcmp', ProfileComponet)
-    
-    useEffect(() => {
-        const pcmp = localStorage.getItem("pcmp");
-
-        if(!pcmp)
-        {
-
-            setProfileComponet(pcmp);
-        }
-    
-      return () => {
-        
-      }
-    }, [ProfileComponet])
-    
+   
 
 
     return (
