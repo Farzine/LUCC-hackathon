@@ -201,7 +201,7 @@ goto
                 {day.getDate()}
               </div>
               {appointmentsForDay.map((appt, idx) => (
-                <div key={idx} className="mt-1 text-xs font-semibold text-white ">
+                <div key={idx} className="mt-1 text-xs font-semibold text-black ">
                 { idx === 0 &&
                 <div className="flex items-center gap-2"> <AiOutlineSchedule className="h-8 w-8"/> Total Meetings {appointmentsForDay.length}
                 

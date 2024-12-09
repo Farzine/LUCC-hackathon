@@ -19,7 +19,6 @@ export const DataProvider = ({ children }) => {
 
     return (
         <DataContext.Provider value={{
-        
             name, 
             setname,
             ProfileComponet,
@@ -33,3 +32,4 @@ export const DataProvider = ({ children }) => {
 };
 
 export { DataContext };
+

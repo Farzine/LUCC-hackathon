@@ -110,25 +110,21 @@ const SlotItem = ({ slot }) => {
     <div className="flex flex-col md:flex-row justify-between items-center p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
       <div className="mb-2 md:mb-0">
         <h3 className="text-lg font-semibold text-gray-800">{slot.slot_name}</h3>
-        {user && (
-          <p className="text-sm text-gray-600">
-            Logged in as: {user.name || "Unknown User"}
-          </p>
-        )}
+      
       </div>
       <div className="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-4">
         <div className="border border-sky-300 rounded-full px-2">
           <span className="font-medium text-gray-700">Start:</span>{" "}
           {formattedStart}
         </div>
-        <div className="border border-yellow-300 rounded-full px-2">
+        <div className="border border-yellow-300  rounded-full px-2">
           <span className="font-medium text-gray-700">End:</span> {formattedEnd}
         </div>
         {ProfileComponet === "mymeetingsperday" ? (
           <div>
             <Dialog>
               <DialogTrigger>
-                <Button className="bg-customPurple rounded-full text-white">
+                <Button className="bg-customRed rounded-full text-white">
                   Edit Meeting
                 </Button>
               </DialogTrigger>
