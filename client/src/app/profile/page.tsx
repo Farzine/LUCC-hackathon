@@ -1,22 +1,30 @@
 // pages/index.js
 "use client";
+import Cookies from "js-cookie";
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { DataContext } from "../../../ContextAPI/DataContext";
+import Analytics from "../components/profileComponets/Analytics";
 import MeetingCalendar from "../components/profileComponets/MeetingCalender";
 import MeetingsPerDay from "../components/profileComponets/MeetingsPerDay";
 import MyMeetingCalender from "../components/profileComponets/MyMeetingCalender";
-import MyMeetingPerDay from "../components/profileComponets/MyMeetingsPerDay"
+import MyMeetingPerDay from "../components/profileComponets/MyMeetingsPerDay";
 import logo from "/public/images/logo-no-bg.png";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger
-} from "@/components/ui/dialog";
-import axios from "axios";
+import { useRouter } from "next/navigation";
 export default function Page() {
   const { ProfileComponet, setProfileComponet } = useContext(DataContext);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    const userId = localStorage.getItem("user_id");
+
+    if (!token || !userId) {
+      router.push("/auth");
+    }
+  }, []);
 
   console.log(ProfileComponet);
 
@@ -39,11 +47,11 @@ export default function Page() {
         <div className="mt-5  ">
           <ul>
             <li
-              onClick={() => setProfileComponet("dashboard")}
+              onClick={() => setProfileComponet("analytics")}
               className="p-2 w-full h-10 hover:border-r-4 hover:bg-red-100  hover:cursor-pointer hover:border-r-red-500 flex items-center gap-2"
             >
               <MdOutlineSpaceDashboard />
-              Dashboard
+              Analytics
             </li>
             <li
               onClick={() => setProfileComponet("allmeetings")}
@@ -51,12 +59,12 @@ export default function Page() {
             >
               All Meetings
             </li>
-            <li 
-            onClick={() => setProfileComponet("mymeetings")}
-            className="p-2 w-full h-10 hover:border-r-4 hover:bg-red-100  hover:cursor-pointer  hover:border-r-red-500">
+            <li
+              onClick={() => setProfileComponet("mymeetings")}
+              className="p-2 w-full h-10 hover:border-r-4 hover:bg-red-100  hover:cursor-pointer  hover:border-r-red-500"
+            >
               My Meetings
             </li>
-            
           </ul>
         </div>
       </div>
@@ -65,6 +73,7 @@ export default function Page() {
 
       <div className="w-5/6 border bg-slate-50 h-auto right ">
         {/* {ProfileComponet==='dashboard' && <Dashboard />} */}
+        {ProfileComponet === "analytics" && <Analytics />}
         {ProfileComponet === "allmeetings" && <MeetingCalendar />}
         {ProfileComponet === "meetingsperday" && <MeetingsPerDay />}
         {ProfileComponet === "mymeetings" && <MyMeetingCalender />}
