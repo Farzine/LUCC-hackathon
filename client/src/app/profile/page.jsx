@@ -1,5 +1,6 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { TbTimezone } from "react-icons/tb";
 import {
   Dialog,
   DialogContent,
@@ -19,7 +20,7 @@ import {
 import Cookies from "js-cookie";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
 import { BsBuildingGear } from "react-icons/bs";
 import { FaChartPie } from "react-icons/fa";
 import { GoGear } from "react-icons/go";
@@ -33,11 +34,13 @@ import MeetingsPerDay from "../components/profileComponets/MeetingsPerDay";
 import MyMeetingCalender from "../components/profileComponets/MyMeetingCalender";
 import MyMeetingPerDay from "../components/profileComponets/MyMeetingsPerDay";
 import logo from "/public/images/logo-no-bg.png";
+import { DataContext } from "../../../ContextAPI/DataContext";
 
 export default function Page() {
   const [User, setUser] = useState(null);
-  const [ProfileComponet, setProfileComponet] = useState("");
+  const {ProfileComponet, setProfileComponet} = useContext(DataContext);
   const router = useRouter();
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   useEffect(() => {
     // Retrieve user session from localStorage
@@ -47,9 +50,7 @@ export default function Page() {
       setUser(user);
     }
 
-    // Retrieve ProfileComponet and token validation
-    const pcmp = localStorage.getItem("pcmp");
-    setProfileComponet(pcmp || "analytics");
+   
 
     const token = Cookies.get("token");
     const userId = localStorage.getItem("user_id");
@@ -209,7 +210,9 @@ export default function Page() {
           className="my-2 mx-auto"
           width={200}
           height={100}
+          
         />
+            <h1 className="mx-auto w-2/3 text-xl flex items-center gap-2"> Current TimeZone: {timeZone}<TbTimezone/></h1>  
                         <label
                           htmlFor="name"
                           className="block text-sm font-medium text-gray-700"
@@ -305,6 +308,11 @@ export default function Page() {
       
       </div>
     </div>
+                     
+                     
+               
+                     
+                     
                       {/* Submit Button */}
                       <button
                         type="submit"

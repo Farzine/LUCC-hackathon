@@ -1,6 +1,7 @@
 // components/MeetingCalendar.js
 'use client';
 import { Button } from "@/components/ui/button";
+import SearchBar from "@/components/ui/SearchBar";
 import {
   Dialog,
   DialogContent,
@@ -13,6 +14,7 @@ import { AiOutlineSchedule } from "react-icons/ai";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import { DataContext } from "../../../../ContextAPI/DataContext";
 import HostMeeting from "../profileComponets/HostMeeting";
+import { Search } from "lucide-react";
 
 export default function MeetingCalendar() {
   const { ProfileComponet, setProfileComponet,MeetingsPerDay,
@@ -123,6 +125,7 @@ useEffect(() => {
 
   {/* host a meeting */}
   <div className="w-full my-10 flex justify-end">
+   {/* <SearchBar/> */}
   <Dialog>
   <DialogTrigger>
     <Button
