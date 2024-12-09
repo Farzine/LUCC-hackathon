@@ -28,6 +28,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/components/profileComponets/UpdateMeeting.jsx"
-  ],
+, "src/app/profile/page.jsx"  ],
   "exclude": ["node_modules"]
 }

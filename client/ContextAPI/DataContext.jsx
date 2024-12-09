@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext,useEffect, useState } from 'react';
 
 // Create a new context
 const DataContext = createContext();
@@ -15,6 +15,22 @@ export const DataProvider = ({ children }) => {
     const [ProfileComponet, setProfileComponet] = useState("allmeetings");
    const [MeetingsPerDay, setMeetingsPerDay] = useState([]);
 
+   localStorage.setItem('pcmp', ProfileComponet)
+    
+    useEffect(() => {
+        const pcmp = localStorage.getItem("pcmp");
+
+        if(!pcmp)
+        {
+
+            setProfileComponet(pcmp);
+        }
+    
+      return () => {
+        
+      }
+    }, [ProfileComponet])
+    
 
 
     return (
