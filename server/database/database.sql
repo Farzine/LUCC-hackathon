@@ -26,7 +26,7 @@ CREATE TABLE booking(
   slot_id VARCHAR(255) NOT NULL,
   user_id VARCHAR(50) NOT NULL,
   role VARCHAR(255) NOT NULL,
-  status ENUM('pending', 'booked', 'canceled') NOT NULL DEFAULT 'pending',
+  status ENUM('pending', 'booked') NOT NULL DEFAULT 'booked',
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (slot_id) REFERENCES slots (slot_id),
   FOREIGN KEY (user_id) REFERENCES users (user_id)
