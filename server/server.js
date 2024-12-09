@@ -6,7 +6,7 @@ const slotRouter = require('./routes/slotRoutes');
 const searchRoutes = require('./routes/slotRoutes');
 const bookings= require('./routes/bookingReqRoute')
 const dashboard= require('./routes/dashboardRoute')
-
+const notice= require('./routes/noticeRouter')
 const cookieParser = require('cookie-parser');
 const cloudinary = require('cloudinary').v2;
 const cors = require("cors");
@@ -40,6 +40,7 @@ app.use('/api/slot', slotRouter);
 app.use('/api/search', searchRoutes);
 app.use('/api/booking', bookings);
 app.use('/api/dashboard', dashboard)
+app.use('/api/notice', notice)
 
 
 const PORT = process.env.PORT || 5000;
@@ -63,3 +64,4 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 // daily slots bookings get- http://localhost:5000/api/dashboard/dailybookings
 
 // get user role get- http://localhost:5000/api/booking/book/get-role
+// get- http://localhost:5000/api/notice/allnotice

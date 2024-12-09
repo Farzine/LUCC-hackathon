@@ -62,17 +62,38 @@ exports.updateBookingRequestStatus = (req, res) => {
           return res.status(404).json({ message: 'Booking request not found.' });
         }
   
-        // Return a success response after the status is updated
-        res.status(200).json({
-          message: `Booking request status updated to ${newStatus}`,
-          bookingRequest: {
-            request_id: requestId,
-            status: newStatus,
-          },
+        // Create a notification message
+        const notificationMessage = 'Meeting request updated';
+  
+        // Insert a new notification into the user_notification table
+        const insertNotificationQuery = `
+          INSERT INTO user_notification (user_id, message, status) 
+          VALUES (?, ?, 'unread')
+        `;
+  
+        // Assuming the notification is being sent to the user who made the booking request
+        db.query(insertNotificationQuery, [userId, notificationMessage], (err, notificationResult) => {
+          if (err) {
+            return res.status(500).json({ message: 'Error inserting notification', error: err });
+          }
+  
+          // Return a success response after the status is updated and notification is created
+          res.status(200).json({
+            message: `Booking request status updated to ${newStatus}`,
+            bookingRequest: {
+              request_id: requestId,
+              status: newStatus,
+            },
+            notification: {
+              notification_id: notificationResult.insertId,  // The ID of the inserted notification
+              message: notificationMessage,
+              status: 'unread',
+            }
+          });
         });
       });
     });
-  };
+};
 
 
 
