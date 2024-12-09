@@ -3,30 +3,30 @@ const { v4: uuidv4 } = require('uuid');
 
 
 exports.makeBookingRequest = (req, res) => {
-    const userId = req.user.user_id;
+  const userId = req.user.user_id;
 
-    const bookingReqId = uuidv4();
-    const { slotId } = req.body;
+  const bookingReqId = uuidv4();
+  const { slotId } = req.body;
 
-    const query = 'INSERT INTO booking_request (booking_id, slot_id, user_id) VALUES (?, ?,?)';
+  const query = 'INSERT INTO booking_request (request_id, slot_id, user_id) VALUES (?, ?,?)';
 
-    db.query(query, [bookingReqId, slotId, userId], (err, result) => {
-        if (err) {
-            return res.status(500).json({ message: 'Error creating booking request', error: err });
-        }
+  db.query(query, [bookingReqId, slotId, userId], (err, result) => {
+      if (err) {
+          return res.status(500).json({ message: 'Error creating booking request', error: err });
+      }
 
-        // Return a success response
-        res.status(200).json({
-            message: 'Booking request created successfully',
-            bookingRequest: {
-                booking_req_id: bookingReqId,
-                slot_id: slotId,
-                user_id: userId,
-                status: 'pending',
-            }
-        });
+      // Return a success response
+      res.status(200).json({
+          message: 'Booking request created successfully',
+          bookingRequest: {
+              booking_req_id: bookingReqId,
+              slot_id: slotId,
+              user_id: userId,
+              status: 'pending',
+          }
+      });
 
-    });
+  });
 }
 
 exports.updateBookingRequestStatus = (req, res) => {
@@ -76,26 +76,32 @@ exports.updateBookingRequestStatus = (req, res) => {
 
 
 
-  // Function to fetch booking details from the database
-exports.getBookingDetails =(req, res) => { // Get the user ID from the authenticated user
-    const { userId, slotId } = req.body; 
-    return new Promise((resolve, reject) => {
-      const query = `
-        SELECT booking_id, role 
-        FROM booking 
-        WHERE user_id = ? AND slot_id = ?
-      `;
-      
-      // Execute the query
-      db.query(query, [userId, slotId], (err, results) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(results[0]); // Assuming only one result is expected
-        }
-      });
+  exports.getBookingDetails = (req, res) => {
+    const { userId, slotId } = req.body;
+  
+    if (!userId || !slotId) {
+      return res.status(400).json({ message: "User ID and Slot ID are required." });
+    }
+  
+    const query = `
+      SELECT booking_id, role 
+      FROM booking 
+      WHERE user_id = ? AND slot_id = ?
+    `;
+  
+    db.query(query, [userId, slotId], (err, results) => {
+      if (err) {
+        console.error("Error executing query:", err);
+        return res.status(500).json({ message: "Database query failed.", error: err });
+      }
+  
+      if (results.length === 0) {
+        return res.status(404).json({ message: "No booking found for the provided details." });
+      }
+  
+      return res.status(200).json({ bookingDetails: results[0] });
     });
-  }
+  };
   
 
 
